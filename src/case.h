@@ -6,8 +6,9 @@ typedef struct _case {
 } Case;
 
 typedef enum _direction {
-    UP = 1, DOWN,
-    LEFT, RIGHT
+            UP = 1,
+    LEFT,            RIGHT,
+            DOWN,
 } Direction;
 
 #endif

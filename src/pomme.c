@@ -11,6 +11,17 @@ Pomme pomme_aleatoire(int nb_lignes, int nb_colonnes) {
     };
 }
 
+int pomme_ajoute_pomme(ListePommes* pommes, Pomme p) {
+    ListePommesEntry* entry = alloue_pomme(p);
+
+    if (!entry)
+        return 0;
+
+    entry->next = *pommes;
+    *pommes = entry;
+
+    return 1;
+}
 
 ListePommesEntry* alloue_pomme(Pomme p) {
     ListePommesEntry* apple = malloc(sizeof(ListePommesEntry));

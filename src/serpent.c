@@ -21,9 +21,14 @@ Serpent serpent_initialiser(int nb_lignes, int nb_colonnes, int taille) {
 
 void serpent_ajoute_case(ListeSerpent* serpent, Case c) {
     ListeSerpentEntry* entry = alloue_case_serpent(c);
-    
+
+    if (!entry)
+        return 0;
+
     entry->next = *serpent;
     *serpent = entry;
+
+    return 1;
 }
 
 ListeSerpentEntry* alloue_case_serpent(Case c) {
