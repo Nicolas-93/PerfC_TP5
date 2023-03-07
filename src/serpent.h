@@ -11,9 +11,9 @@ typedef struct _ListeSerpent {
 
 typedef struct serpent
 {
-    Direction snake_dir;
+    Direction dir;
     ListeSerpent snake_cases;
-    int len_snake;
+    int len;
 } Serpent;
 
 /**
@@ -40,7 +40,7 @@ Case serpent_case_visee(Serpent serp);
  * @param serpent 
  * @param c 
  */
-void serpent_ajoute_case(ListeSerpent* serpent, Case c);
+int serpent_ajoute_case(ListeSerpent* serpent, Case c);
 
 /**
  * @brief Alloue une case pour le serpent.
@@ -51,5 +51,20 @@ void serpent_ajoute_case(ListeSerpent* serpent, Case c);
  * @return Serpent 
  */
 ListeSerpentEntry* alloue_case_serpent(Case c);
+
+/**
+ * @brief Avance le serpent d'une case.
+ * (Supprime la dernière case et ajoute
+ * une case devant la tête)
+ * @param serp 
+ * @return int 
+ */
+int serpent_avancer(Serpent* serp);
+
+/**
+ * @brief Supprime la dernière case du serpent.
+ * 
+ */
+void serpent_supprime_queue(Serpent* serp);
 
 #endif

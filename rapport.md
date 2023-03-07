@@ -1,6 +1,6 @@
 ---
 title: Perfectionnement à la programmation C
-subtitle: TP3 - Chronomètre
+subtitle: TP5 - Snake
 date: 13 février 2023
 colorlinks: true
 author:
@@ -11,7 +11,7 @@ geometry: margin=3cm
 header-includes:
     - \usepackage{graphicx}
     - \usepackage{fancyhdr}
-    # https://ctex.org/documents/packages/layout/fancyhdr.pdf
+    # <https://ctex.org/documents/packages/layout/fancyhdr.pdf>
     - \pagestyle{fancy}
     - \rhead{}
     - \lhead{}

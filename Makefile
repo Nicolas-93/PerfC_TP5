@@ -3,11 +3,11 @@ BUILD_DIR=build
 SRC_DIR=src
 INC_DIR=include
 INCLUDE=-I$(INC_DIR)
-LIBS=-lncurses -lm
+LIBS=-lncursesw -lm
 CFLAGS=-fdiagnostics-color=always -Wall -pedantic -std=gnu17 -g -O0
 TP_N=5
 NOM_ZIP=TP$(TP_N)_SEBAN_POUYANFAR.zip
-EXEC=NomProg
+EXEC=main
 CONTENU_ZIP=$(SRC_DIR) $(INC_DIR) .clang-format .clang-tidy Makefile rapport.pdf
 
 SOURCES=$(wildcard $(SRC_DIR)/*.c)
@@ -25,8 +25,11 @@ $(BUILD_DIR)/$(EXEC): $(OBJS)
 	$(CC) $^ -o $@ $(LIBS)
 
 # Dépendances
-Main.o: Main.c B.h C.h D.h
-B.o: B.c C.h
+main.o: main.c interface.h serpent.h monde.h
+interface.o: interface.c
+serpent.o: serpent.c case.h
+monde.o: monde.c case.h serpent.h pomme.h
+pomme.o: pomme.c case.h
 
 # Création des fichiers objets à partir des fichiers sources
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c

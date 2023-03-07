@@ -2,12 +2,14 @@
 #define MONDE_INCLUDED
 
 #include "pomme.h"
+#include "serpent.h"
 #include <stdbool.h>
+#include <ncurses.h>
 
 typedef struct monde {
     int hauteur, largeur;
-    Serpent snake;
     int eaten_apples;
+    Serpent snake;
     ListePommes apples;
 } Monde;
 
@@ -43,9 +45,11 @@ int monde_est_mort_serpent(Monde monde);
 /**
  * @brief Avance le serpent.
  * 
- * @param mon 
+ * @param mon
+ * @return int -1 si le serpent est mort, 0 si une
+ * erreur d'allocation de mémoire est survenue, 1 sinon.
  */
-void monde_evoluer_serpent(Monde* mon);
+int monde_evoluer_serpent(Monde* mon);
 
 /**
  * @brief Retourne vrai si une pomme existe en case
