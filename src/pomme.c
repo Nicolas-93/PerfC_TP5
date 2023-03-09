@@ -1,5 +1,5 @@
 #include "pomme.h"
-#include "case.h"
+#include "types.h"
 #include <stdlib.h>
 
 Pomme pomme_aleatoire(int nb_lignes, int nb_colonnes) {

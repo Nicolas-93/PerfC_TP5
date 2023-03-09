@@ -11,7 +11,12 @@ typedef struct monde {
     int eaten_apples;
     Serpent snake;
     ListePommes apples;
+    bool pause;
 } Monde;
+
+typedef enum MondeErreur {
+    MONDE_NONE,
+} MondeErreur;
 
 /**
  * @brief Ajoute une pomme au monde.

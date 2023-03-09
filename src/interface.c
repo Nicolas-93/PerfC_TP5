@@ -1,5 +1,6 @@
 #include "interface.h"
 #include <ncurses.h>
+#include <string.h>
 
 WINDOW* game_win = NULL;
 
@@ -14,10 +15,16 @@ WINDOW* interface_initialiser(Monde mon) {
         mon.hauteur + 2, mon.largeur + 2,
         LINES / 2 - mon.hauteur / 2,
         COLS / 2 - mon.largeur / 2);
+    
+    keypad(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
+    
     keypad(game_win, TRUE);
     nodelay(game_win, TRUE);
+    
     noecho();
     curs_set(FALSE);
+    
     interface_afficher_quadrillage(mon);
 
     return game_win;
@@ -75,7 +82,7 @@ void interface_afficher_monde(Monde mon) {
     wrefresh(stdscr);
 }
 
-void interface_piloter(Monde *mon) {
+int interface_piloter(Monde *mon) {
     int c = wgetch(game_win);
     switch (c) {
         case KEY_UP:
@@ -90,9 +97,21 @@ void interface_piloter(Monde *mon) {
         case KEY_RIGHT:
             mon->snake.dir = RIGHT;
             break;
+        case 'p':
+            mon->pause ^= 1;
+            break;
         default:
             break;
     }
+
+    return c;
+}
+
+void interface_afficher_message(char* msg) {
+    move(LINES - 2, 0);
+    clrtoeol();
+    mvprintw(LINES - 2, COLS / 2 - strlen(msg) / 2, msg);
+    wrefresh(stdscr);
 }
 
 

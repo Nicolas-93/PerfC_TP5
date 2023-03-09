@@ -1,5 +1,6 @@
 #include "monde.h"
 #include "pomme.h"
+#include "types.h"
 #include "serpent.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -44,6 +45,7 @@ Monde monde_initialiser(
         .hauteur = nb_lignes,
         .eaten_apples = 0,
         .apples = NULL,
+        .pause = false,
     };
 
     monde.snake = serpent_initialiser(nb_lignes, nb_colonnes, taille_serpent);
@@ -68,7 +70,7 @@ int monde_est_mort_serpent(Monde monde) {
 
 int monde_evoluer_serpent(Monde* monde) {
     if (monde_est_mort_serpent(*monde)) {
-        return -1;
+        return SERPENT_MORT;
     }
     Case new_tete = serpent_case_visee(monde->snake);
     if (monde_pomme_existe(monde->apples, new_tete)) {
@@ -82,5 +84,5 @@ int monde_evoluer_serpent(Monde* monde) {
         return 0;
     }
 
-    return 1;
+    return MONDE_NONE;
 }

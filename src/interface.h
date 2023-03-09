@@ -8,6 +8,7 @@
 #include "monde.h"
 
 #define STR_SCORE "Score: %3d"
+#define STR_PERDU "Perdu !"
 
 WINDOW* interface_initialiser(Monde mon);
 
@@ -27,6 +28,11 @@ void interface_afficher_quadrillage(Monde mon);
  */
 void interface_afficher_pomme(Pomme pom);
 
+/**
+ * @brief Affiche les pommes de la liste pomme.
+ * 
+ * @param pomme 
+ */
 void interface_afficher_pommes(ListePommes pomme);
 
 /**
@@ -53,6 +59,14 @@ void interface_afficher_monde(Monde mon);
  * 
  * @param mon 
  */
-void interface_piloter(Monde *mon);
+int interface_piloter(Monde *mon);
+
+/**
+ * @brief Affiche le message msg à la dernière ligne
+ * de la fenêtre principale, en effaçant son contenu
+ * 
+ * @param msg 
+ */
+void interface_afficher_message(char* msg);
 
 #endif

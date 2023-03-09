@@ -1,7 +1,7 @@
 #ifndef SERPENT_INCLUDED
 #define SERPENT_INCLUDED
 
-#include "case.h"
+#include "types.h"
 
 
 typedef struct _ListeSerpent {
@@ -9,12 +9,16 @@ typedef struct _ListeSerpent {
     struct _ListeSerpent* next;
 } ListeSerpentEntry, *ListeSerpent;
 
-typedef struct serpent
-{
+typedef struct serpent {
     Direction dir;
     ListeSerpent snake_cases;
     int len;
 } Serpent;
+
+typedef enum SerpentErreur {
+    SERPENT_NONE,
+    SERPENT_MORT = 1,
+} SerpentErreur;
 
 /**
  * @brief Initialise le serpent.

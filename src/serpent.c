@@ -1,5 +1,5 @@
 #include "serpent.h"
-#include "case.h"
+#include "types.h"
 #include <stdlib.h>
 
 

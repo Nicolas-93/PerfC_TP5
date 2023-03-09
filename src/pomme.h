@@ -1,6 +1,6 @@
 #ifndef POMME_INCLUDED
 #define POMME_INCLUDED
-#include "case.h"
+#include "types.h"
 
 typedef struct pomme {
     Case c;

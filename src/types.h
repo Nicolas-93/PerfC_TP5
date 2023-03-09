@@ -1,5 +1,10 @@
-#ifndef CASE_INCLUDED
-#define CASE_INCLUDED
+#ifndef TYPES_INCLUDED
+#define TYPES_INCLUDED
+
+typedef enum Error {
+    ERR_NONE,
+    ERR_ALLOC,
+} Error;
 
 typedef struct _case {
     int x, y;
