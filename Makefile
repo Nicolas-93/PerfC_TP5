@@ -27,9 +27,9 @@ $(BUILD_DIR)/$(EXEC): $(OBJS)
 # Dépendances
 main.o: main.c interface.h serpent.h monde.h temps.h
 interface.o: interface.c
-serpent.o: serpent.c types.h linkedlist.h
-monde.o: monde.c types.h serpent.h pomme.h linkedlist.h
-pomme.o: pomme.c types.h linkedlist.h
+serpent.o: serpent.c types.h list.h
+monde.o: monde.c types.h serpent.h pomme.h list.h
+pomme.o: pomme.c types.h list.h
 temps.o: temps.c temps.h
 
 # Création des fichiers objets à partir des fichiers sources

@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
     setlocale(LC_ALL, "");
     initscr();
 
-    Monde monde = monde_initialiser(30, 60, 5, 5);
+    Monde monde = monde_initialiser(15, 25, 5, 5);
     WINDOW* game_win = interface_initialiser(monde);
 
     interface_afficher_monde(monde);

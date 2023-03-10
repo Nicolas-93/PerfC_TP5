@@ -1,5 +1,5 @@
 #include "interface.h"
-#include "linkedlist.h"
+#include "list.h"
 #include <ncurses.h>
 #include <string.h>
 
@@ -61,9 +61,9 @@ void interface_afficher_serpent(const Serpent* ser) {
     if (last_case.x != -1 && last_case.y != -1)
         mvwaddch(game_win, last_case.y + 1, last_case.x + 1, ' ');
 
+    last_case = LIST_FIRST(&ser->snake_cases)->c;
+
     LIST_FOREACH(cell, &ser->snake_cases) {
-        if (cell->next == NULL)
-            last_case = cell->c;
         mvwaddch(game_win, cell->c.y + 1, cell->c.x + 1, ACS_DIAMOND);
     }
 }

@@ -12,10 +12,13 @@ Serpent serpent_initialiser(int nb_lignes, int nb_colonnes, int taille) {
     Case c = {
         .x = nb_colonnes / 2, .y = nb_lignes / 2,
     };
+    int ordre_ajout = 1;
     LIST_INIT(&snake.snake_cases);
+
+    ordre_ajout = snake.dir == RIGHT ? -1 : 1;
     
     for (int i = 0; i < taille; ++i) {
-        c.x += 1;
+        c.x += 1 * ordre_ajout;
         serpent_ajoute_case(&snake.snake_cases, c);
     }
     snake.len = taille;
@@ -45,7 +48,7 @@ ListeSerpentEntry* alloue_case_serpent(Case c) {
 
 Case serpent_case_visee(const Serpent* serp) {
     Case c = {0};
-    Case tete = LIST_FIRST(&serp->snake_cases)->c ;
+    Case tete = LIST_LAST(&serp->snake_cases)->c;
     c = tete;
 
     switch (serp->dir) {
@@ -70,10 +73,17 @@ Case serpent_case_visee(const Serpent* serp) {
 
 int serpent_avancer(Serpent* serp) {
     Case c = serpent_case_visee(serp);
-     if (!serpent_ajoute_case(&serp->snake_cases, c))
+
+    ListeSerpentEntry* entry = alloue_case_serpent(c);
+    ListeSerpentEntry* deleted;
+    if (!entry)
         return 0;
 
-    serpent_supprime_queue(serp);
+    LIST_INSERT_TAIL(&serp->snake_cases, entry);
+
+    deleted = LIST_FIRST(&serp->snake_cases);
+    LIST_REMOVE_HEAD(&serp->snake_cases);
+    free(deleted);
 
     return 1;
 }

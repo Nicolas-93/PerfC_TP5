@@ -81,10 +81,8 @@ int monde_evoluer_serpent(Monde* monde) {
         serpent_ajoute_case(&monde->snake.snake_cases, new_tete);
         monde->eaten_apples++;
     }
-    else {
-      if (!serpent_avancer(&monde->snake))
+    if (!serpent_avancer(&monde->snake))
         return 0;
-    }
 
     return MONDE_NONE;
 }

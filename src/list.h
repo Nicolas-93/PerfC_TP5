@@ -1,5 +1,5 @@
 /**
- * @brief Implémetation d'une queue, dans l'esprit
+ * @brief Implémetation minimale d'une queue, dans l'esprit
  * de STAILQ.
  * L'utilité principale est d'éviter la redondance
  * de fonctions similaires, pour des types différents
@@ -27,7 +27,7 @@
     (elem)->next = (head)->first;           \
     \
     if ((head)->first == NULL)              \
-        (head)->last = NULL;                \
+        (head)->last = (elem);        \
     \
     (head)->first = (elem);                 \
 } while (0)
@@ -45,4 +45,4 @@
 } while (0)
 
 #define LIST_FOREACH(iter, head) \
-    for ((iter) = (head)->first; (iter); iter = LIST_NEXT(iter))
+    for ((iter) = (head)->first; (iter); (iter) = LIST_NEXT(iter))
