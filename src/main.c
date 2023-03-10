@@ -22,19 +22,19 @@ int main(int argc, char* argv[]) {
     setlocale(LC_ALL, "");
     initscr();
 
-    Monde monde = monde_initialiser(20, 20, 5, 5);
+    Monde monde = monde_initialiser(30, 60, 5, 5);
     WINDOW* game_win = interface_initialiser(monde);
 
     interface_afficher_monde(monde);
 
-    PeriodicChrono chrono = temps_initialiser_attente(0.25);
+    PeriodicChrono move_timing = temps_initialiser_attente(0.25);
 
     while (!quit) {
 
         touche = interface_piloter(&monde);
 
         if (!monde.pause) {
-            if (temps_verifier_depasse(&chrono)) {
+            if (temps_verifier_depasse(&move_timing)) {
                 error = monde_evoluer_serpent(&monde);
                 interface_afficher_monde(monde);
             }

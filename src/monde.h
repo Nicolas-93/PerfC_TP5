@@ -65,7 +65,7 @@ int monde_evoluer_serpent(Monde* mon);
  * @return true 
  * @return false 
  */
-bool monde_pomme_existe(ListePommes apples, Case c);
+bool monde_pomme_existe(const ListePommes* apples, Case c);
 
 /**
  * @brief Retourne vrai si le corps du serpent
@@ -76,6 +76,6 @@ bool monde_pomme_existe(ListePommes apples, Case c);
  * @return true 
  * @return false 
  */
-bool monde_serpent_existe(ListeSerpent snake, Case c);
+bool monde_serpent_existe(const ListeSerpent* snake, Case c);
 
 #endif

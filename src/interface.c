@@ -1,4 +1,5 @@
 #include "interface.h"
+#include "linkedlist.h"
 #include <ncurses.h>
 #include <string.h>
 
@@ -43,25 +44,24 @@ void interface_afficher_pomme(Pomme pom) {
     mvwaddch(game_win, pom.c.y + 1, pom.c.x + 1, 'o');
 }
 
-void interface_afficher_pommes(ListePommes pomme) {
-    for (ListePommesEntry* cell = pomme;
-         cell;
-         cell = cell->next) {
+void interface_afficher_pommes(const ListePommes* pommes) {
+    ListePommesEntry* cell;
+    
+    LIST_FOREACH(cell, pommes) {
         interface_afficher_pomme(cell->p);
     }
 }
 
-void interface_afficher_serpent(Serpent ser) {
+void interface_afficher_serpent(const Serpent* ser) {
     // On retient la dernière case supprimée afin de la remplacer
     // par un espace, pour éviter un clear de la fenêtre.
     static Case last_case = {-1, -1};
+    ListeSerpentEntry* cell;
 
     if (last_case.x != -1 && last_case.y != -1)
         mvwaddch(game_win, last_case.y + 1, last_case.x + 1, ' ');
 
-    for (ListeSerpentEntry* cell = ser.snake_cases;
-         cell;
-         cell = cell->next) {
+    LIST_FOREACH(cell, &ser->snake_cases) {
         if (cell->next == NULL)
             last_case = cell->c;
         mvwaddch(game_win, cell->c.y + 1, cell->c.x + 1, ACS_DIAMOND);
@@ -71,8 +71,8 @@ void interface_afficher_serpent(Serpent ser) {
 void interface_afficher_monde(Monde mon) {
     // wclear(game_win);
     interface_afficher_quadrillage(mon);
-    interface_afficher_pommes(mon.apples);
-    interface_afficher_serpent(mon.snake);
+    interface_afficher_pommes(&mon.apples);
+    interface_afficher_serpent(&mon.snake);
 
     mvprintw(
         LINES - 1, COLS / 2 - sizeof(STR_SCORE) / 2,

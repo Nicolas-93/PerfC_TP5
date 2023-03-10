@@ -4,10 +4,16 @@
 #include "types.h"
 
 
-typedef struct _ListeSerpent {
+typedef struct ListeSerpentEntry {
     Case c;
-    struct _ListeSerpent* next;
-} ListeSerpentEntry, *ListeSerpent;
+    struct ListeSerpentEntry* next;
+} ListeSerpentEntry;
+
+typedef struct ListeSerpent {
+    ListeSerpentEntry* first;
+    ListeSerpentEntry* last;
+} ListeSerpent;
+
 
 typedef struct serpent {
     Direction dir;
@@ -36,7 +42,7 @@ Serpent serpent_initialiser(int nb_lignes, int nb_colonnes, int taille);
  * @param serp 
  * @return Case 
  */
-Case serpent_case_visee(Serpent serp);
+Case serpent_case_visee(const Serpent* serp);
 
 /**
  * @brief Ajoute une case au serpent.

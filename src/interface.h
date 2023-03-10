@@ -33,7 +33,7 @@ void interface_afficher_pomme(Pomme pom);
  * 
  * @param pomme 
  */
-void interface_afficher_pommes(ListePommes pomme);
+void interface_afficher_pommes(const ListePommes* pommes);
 
 /**
  * @brief Affiche le serpent ser selon sa position.
@@ -42,7 +42,7 @@ void interface_afficher_pommes(ListePommes pomme);
  * 
  * @param ser 
  */
-void interface_afficher_serpent(Serpent ser);
+void interface_afficher_serpent(const Serpent* ser);
 
 /**
  * @brief Affiche le monde mon.

@@ -1,17 +1,18 @@
 #include "serpent.h"
 #include "types.h"
+#include "list.h"
 #include <stdlib.h>
 
 
 Serpent serpent_initialiser(int nb_lignes, int nb_colonnes, int taille) {
     Serpent snake = {
-        .snake_cases = NULL,
         .len = taille,
         .dir = RIGHT,
     };
     Case c = {
         .x = nb_colonnes / 2, .y = nb_lignes / 2,
     };
+    LIST_INIT(&snake.snake_cases);
     
     for (int i = 0; i < taille; ++i) {
         c.x += 1;
@@ -28,8 +29,7 @@ int serpent_ajoute_case(ListeSerpent* serpent, Case c) {
     if (!entry)
         return 0;
 
-    entry->next = *serpent;
-    *serpent = entry;
+    LIST_INSERT_HEAD(serpent, entry);
 
     return 1;
 }
@@ -43,12 +43,12 @@ ListeSerpentEntry* alloue_case_serpent(Case c) {
     return snake;
 }
 
-Case serpent_case_visee(Serpent serp) {
+Case serpent_case_visee(const Serpent* serp) {
     Case c = {0};
-    Case tete = serp.snake_cases->c;
+    Case tete = LIST_FIRST(&serp->snake_cases)->c ;
     c = tete;
 
-    switch (serp.dir) {
+    switch (serp->dir) {
     case UP:
         c.y -= 1;
         break;
@@ -69,7 +69,7 @@ Case serpent_case_visee(Serpent serp) {
 }
 
 int serpent_avancer(Serpent* serp) {
-    Case c = serpent_case_visee(*serp);
+    Case c = serpent_case_visee(serp);
      if (!serpent_ajoute_case(&serp->snake_cases, c))
         return 0;
 
@@ -79,7 +79,7 @@ int serpent_avancer(Serpent* serp) {
 }
 
 void serpent_supprime_queue(Serpent* serp) {
-    ListeSerpentEntry* entry = serp->snake_cases;
+    ListeSerpentEntry* entry = LIST_FIRST(&serp->snake_cases);
     ListeSerpentEntry* prev = NULL;
 
     while (entry->next) {
@@ -90,7 +90,7 @@ void serpent_supprime_queue(Serpent* serp) {
     if (prev)
         prev->next = NULL;
     else
-        serp->snake_cases = NULL;
+        LIST_FIRST(&serp->snake_cases) = NULL;
 
     free(entry);
 }

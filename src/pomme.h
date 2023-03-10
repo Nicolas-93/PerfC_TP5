@@ -6,11 +6,15 @@ typedef struct pomme {
     Case c;
 } Pomme;
 
-typedef struct _ListePommes {
+typedef struct ListePommesEntry {
     Pomme p;
-    struct _ListePommes *next;
-} ListePommesEntry, *ListePommes;
+    struct ListePommesEntry *next;
+} ListePommesEntry;
 
+typedef struct ListePommes {
+    ListePommesEntry* first;
+    ListePommesEntry* last;
+} ListePommes;
 
 /**
  * @brief Alloue une pomme.
