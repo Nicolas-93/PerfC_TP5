@@ -10,7 +10,21 @@
 #define STR_SCORE "Score: %3d"
 #define STR_PERDU "Perdu !"
 
+typedef enum ColorPair {
+    PAIR_SERPENT = 1,
+    PAIR_POMME_NORMALE,
+    PAIR_POMME_DOUBLE,
+    PAIR_POMME_EMPOISONNE,
+    PAIR_BOX,
+} ColorPair;
+
 WINDOW* interface_initialiser(Monde mon);
+
+/**
+ * @brief Initialise les couleurs de l'interface
+ * 
+ */
+void interface_init_colors();
 
 /**
  * @brief Affiche le quadrillage du monde, à l'aide de box

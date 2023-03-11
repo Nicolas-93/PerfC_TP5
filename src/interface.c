@@ -25,23 +25,43 @@ WINDOW* interface_initialiser(Monde mon) {
     
     noecho();
     curs_set(FALSE);
-    
+    interface_init_colors();
     interface_afficher_quadrillage(mon);
 
     return game_win;
 }
 
+void interface_init_colors() {
+    start_color();
+
+    init_pair(PAIR_SERPENT, COLOR_GREEN, COLOR_BLACK);
+    init_pair(PAIR_POMME_NORMALE, COLOR_MAGENTA, COLOR_BLACK);
+    init_pair(PAIR_POMME_DOUBLE, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(PAIR_POMME_EMPOISONNE, COLOR_RED, COLOR_BLACK);
+    init_pair(PAIR_BOX, COLOR_BLUE, COLOR_BLACK);
+}
+
 void interface_afficher_quadrillage(Monde mon) {
+    wattron(game_win, COLOR_PAIR(PAIR_BOX) | A_BOLD);
     box(game_win, 0, 0);
-    // wborder(
-    //     game_win,
-    //     ACS_VLINE, ACS_VLINE,
-    //     115 | A_ALTCHARSET, 111 | A_ALTCHARSET,
-    //     0, 0, 0, 0);
+    wattroff(game_win, COLOR_PAIR(PAIR_BOX) | A_BOLD);
 }
 
 void interface_afficher_pomme(Pomme pom) {
-    mvwaddch(game_win, pom.c.y + 1, pom.c.x + 1, 'o');
+
+    int mode;
+
+    switch (pom.type) {
+    case POMME_DOUBLE:
+        mode = PAIR_POMME_DOUBLE;
+        break;
+    case POMME_EMPOISOINNE:
+        mode = PAIR_POMME_EMPOISONNE;
+        break;
+    default:
+        mode = PAIR_POMME_NORMALE;
+    }
+    mvwaddch(game_win, pom.c.y + 1, pom.c.x + 1, 'o' | COLOR_PAIR(mode));
 }
 
 void interface_afficher_pommes(const ListePommes* pommes) {
@@ -64,7 +84,11 @@ void interface_afficher_serpent(const Serpent* ser) {
     last_case = LIST_FIRST(&ser->snake_cases)->c;
 
     LIST_FOREACH(cell, &ser->snake_cases) {
-        mvwaddch(game_win, cell->c.y + 1, cell->c.x + 1, ACS_DIAMOND);
+        int attrmode = cell == LIST_LAST(&ser->snake_cases) ? A_BOLD : A_NORMAL;
+        mvwaddch(
+            game_win,
+            cell->c.y + 1, cell->c.x + 1,
+            ACS_DIAMOND | COLOR_PAIR(PAIR_SERPENT) | attrmode);
     }
 }
 
