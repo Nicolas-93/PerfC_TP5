@@ -12,6 +12,8 @@ typedef struct monde {
     Serpent snake;
     ListePommes apples;
     bool pause;
+    int nb_pommes;
+    int nb_pommes_empoisonnees;
 } Monde;
 
 typedef enum MondeErreur {
@@ -23,7 +25,7 @@ typedef enum MondeErreur {
  * 
  * @param mon 
  */
-void monde_ajouter_pomme(Monde *mon);
+void monde_ajouter_pomme(Monde *mon, bool est_empoisonne);
 
 /**
  * @brief Initialise le monde.
@@ -36,7 +38,8 @@ void monde_ajouter_pomme(Monde *mon);
  */
 Monde monde_initialiser(
     int nb_lignes, int nb_colonnes,
-    int taille_serpent, int nb_pommes
+    int taille_serpent,
+    int nb_pommes, int pourcent_empoisonne
 );
 
 /**

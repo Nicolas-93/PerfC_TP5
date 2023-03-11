@@ -32,9 +32,10 @@ ListePommesEntry* alloue_pomme(Pomme p) {
     return apple;
 }
 
-int pomme_liste_supprime_pomme(ListePommes* pommes, Case c) {
+Pomme pomme_liste_supprime_pomme(ListePommes* pommes, Case c) {
     ListePommesEntry* entry;
     ListePommesEntry* prev = NULL;
+    Pomme deleted = {.est_empoisonnee = false};
 
     LIST_FOREACH(entry, pommes) {
         if (entry->p.c.x == c.x && entry->p.c.y == c.y) {
@@ -42,13 +43,13 @@ int pomme_liste_supprime_pomme(ListePommes* pommes, Case c) {
                 prev->next = entry->next;
             else // Le premier élement est celui recherché
                 pommes->first = entry->next;
-
+            deleted = entry->p;
             free(entry);
-            return 1;
+            return deleted;
         }
 
         prev = entry;
     }
 
-    return 0;
+    return deleted;
 }

@@ -5,9 +5,9 @@
 #include "serpent.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 
-void monde_ajouter_pomme(Monde *mon) {
-
+void monde_ajouter_pomme(Monde *mon, bool est_empoisonnee) {
     Pomme apple;
 
     do {
@@ -16,7 +16,7 @@ void monde_ajouter_pomme(Monde *mon) {
         monde_pomme_existe(&mon->apples, apple.c) ||
         monde_serpent_existe(&mon->snake.snake_cases, apple.c)
     );
-
+    apple.est_empoisonnee = est_empoisonnee;
     pomme_ajoute_pomme(&mon->apples, apple);
 }
 
@@ -40,20 +40,26 @@ bool monde_serpent_existe(const ListeSerpent* snake, Case c) {
 
 Monde monde_initialiser(
     int nb_lignes, int nb_colonnes,
-    int taille_serpent, int nb_pommes
+    int taille_serpent, int nb_pommes, int pourcent_empoisonne
 ) {
+    assert(pourcent_empoisonne >= 0 && pourcent_empoisonne <= 100);
     Monde monde = {
         .largeur = nb_colonnes,
         .hauteur = nb_lignes,
         .eaten_apples = 0,
         .pause = false,
+        .nb_pommes = nb_pommes,
+        .nb_pommes_empoisonnees = ((float) pourcent_empoisonne / 100) * nb_pommes,
     };
 
     monde.snake = serpent_initialiser(nb_lignes, nb_colonnes, taille_serpent);
 
     LIST_INIT(&monde.apples);
-    for (int i = 0; i < taille_serpent; ++i)
-        monde_ajouter_pomme(&monde);
+    bool est_empoisonnee;
+    for (int i = 0; i < nb_pommes; ++i) {
+        est_empoisonnee = i < monde.nb_pommes_empoisonnees;
+        monde_ajouter_pomme(&monde, est_empoisonnee);
+    }
 
     return monde;
 }
@@ -76,8 +82,11 @@ int monde_evoluer_serpent(Monde* monde) {
     }
     Case new_tete = serpent_case_visee(&monde->snake);
     if (monde_pomme_existe(&monde->apples, new_tete)) {
-        pomme_liste_supprime_pomme(&monde->apples, new_tete);
-        monde_ajouter_pomme(monde);
+        Pomme deleted = pomme_liste_supprime_pomme(&monde->apples, new_tete);
+        if (deleted.est_empoisonnee)
+            return SERPENT_MORT;
+
+        monde_ajouter_pomme(monde, false);
         serpent_ajoute_case(&monde->snake.snake_cases, new_tete);
         monde->eaten_apples++;
     }
