@@ -35,7 +35,7 @@ ListePommesEntry* alloue_pomme(Pomme p) {
 Pomme pomme_liste_supprime_pomme(ListePommes* pommes, Case c) {
     ListePommesEntry* entry;
     ListePommesEntry* prev = NULL;
-    Pomme deleted = {.est_empoisonnee = false};
+    Pomme deleted = {.type = POMME_NORMALE};
 
     LIST_FOREACH(entry, pommes) {
         if (entry->p.c.x == c.x && entry->p.c.y == c.y) {

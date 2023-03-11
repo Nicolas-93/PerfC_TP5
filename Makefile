@@ -28,9 +28,10 @@ $(BUILD_DIR)/$(EXEC): $(OBJS)
 main.o: main.c interface.h serpent.h monde.h temps.h
 interface.o: interface.c
 serpent.o: serpent.c types.h list.h
-monde.o: monde.c types.h serpent.h pomme.h list.h
+monde.o: monde.c types.h serpent.h pomme.h list.h random.h
 pomme.o: pomme.c types.h list.h
 temps.o: temps.c temps.h
+random.o : random.c random.h
 
 # Création des fichiers objets à partir des fichiers sources
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c

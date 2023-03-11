@@ -9,6 +9,7 @@
 typedef struct monde {
     int hauteur, largeur;
     int eaten_apples;
+    int score;
     Serpent snake;
     ListePommes apples;
     bool pause;
@@ -24,8 +25,9 @@ typedef enum MondeErreur {
  * @brief Ajoute une pomme au monde.
  * 
  * @param mon 
+ * @param type type de pomme à ajouter
  */
-void monde_ajouter_pomme(Monde *mon, bool est_empoisonne);
+void monde_ajouter_pomme(Monde *mon, PommeType type);
 
 /**
  * @brief Initialise le monde.

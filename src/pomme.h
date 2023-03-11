@@ -3,9 +3,15 @@
 #include "types.h"
 #include <stdbool.h>
 
+typedef enum PommeType {
+    POMME_NORMALE = 0,
+    POMME_EMPOISOINNE,
+    POMME_DOUBLE,
+} PommeType;
+
 typedef struct pomme {
     Case c;
-    bool est_empoisonnee;
+    PommeType type;
 } Pomme;
 
 typedef struct ListePommesEntry {

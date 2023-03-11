@@ -3,11 +3,12 @@
 #include "types.h"
 #include "list.h"
 #include "serpent.h"
+#include "random.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
 
-void monde_ajouter_pomme(Monde *mon, bool est_empoisonnee) {
+void monde_ajouter_pomme(Monde *mon, PommeType type) {
     Pomme apple;
 
     do {
@@ -16,7 +17,12 @@ void monde_ajouter_pomme(Monde *mon, bool est_empoisonnee) {
         monde_pomme_existe(&mon->apples, apple.c) ||
         monde_serpent_existe(&mon->snake.snake_cases, apple.c)
     );
-    apple.est_empoisonnee = est_empoisonnee;
+
+    if (type == (POMME_DOUBLE | POMME_NORMALE))
+        apple.type = random_bool() ? POMME_DOUBLE : POMME_NORMALE; 
+    else
+        apple.type = type;
+
     pomme_ajoute_pomme(&mon->apples, apple);
 }
 
@@ -55,9 +61,9 @@ Monde monde_initialiser(
     monde.snake = serpent_initialiser(nb_lignes, nb_colonnes, taille_serpent);
 
     LIST_INIT(&monde.apples);
-    bool est_empoisonnee;
+    PommeType est_empoisonnee;
     for (int i = 0; i < nb_pommes; ++i) {
-        est_empoisonnee = i < monde.nb_pommes_empoisonnees;
+        est_empoisonnee = i < monde.nb_pommes_empoisonnees ? POMME_EMPOISOINNE : POMME_NORMALE;
         monde_ajouter_pomme(&monde, est_empoisonnee);
     }
 
@@ -83,10 +89,20 @@ int monde_evoluer_serpent(Monde* monde) {
     Case new_tete = serpent_case_visee(&monde->snake);
     if (monde_pomme_existe(&monde->apples, new_tete)) {
         Pomme deleted = pomme_liste_supprime_pomme(&monde->apples, new_tete);
-        if (deleted.est_empoisonnee)
+        
+        switch (deleted.type) {
+        case POMME_EMPOISOINNE:
             return SERPENT_MORT;
+        case POMME_DOUBLE:
+            monde->score += 2;
+            break;
+        case POMME_NORMALE:
+            monde->score++;
+        default:
+            break;
+        }
 
-        monde_ajouter_pomme(monde, false);
+        monde_ajouter_pomme(monde, POMME_NORMALE | POMME_DOUBLE);
         serpent_ajoute_case(&monde->snake.snake_cases, new_tete);
         monde->eaten_apples++;
     }

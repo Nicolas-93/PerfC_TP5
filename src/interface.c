@@ -76,7 +76,7 @@ void interface_afficher_monde(Monde mon) {
 
     mvprintw(
         LINES - 1, COLS / 2 - sizeof(STR_SCORE) / 2,
-        STR_SCORE, mon.eaten_apples);
+        STR_SCORE, mon.score);
 
     wrefresh(game_win);
     wrefresh(stdscr);
