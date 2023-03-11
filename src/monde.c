@@ -56,6 +56,7 @@ Monde monde_initialiser(
         .pause = false,
         .nb_pommes = nb_pommes,
         .nb_pommes_empoisonnees = ((float) pourcent_empoisonne / 100) * nb_pommes,
+        .sound = true,
     };
 
     monde.snake = serpent_initialiser(nb_lignes, nb_colonnes, taille_serpent);

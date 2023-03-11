@@ -15,6 +15,7 @@ typedef struct monde {
     bool pause;
     int nb_pommes;
     int nb_pommes_empoisonnees;
+    bool sound;
 } Monde;
 
 typedef enum MondeErreur {
