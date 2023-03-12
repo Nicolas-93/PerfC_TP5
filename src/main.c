@@ -10,6 +10,7 @@
 #include <time.h>
 #include "temps.h"
 #include "ini_parser.h"
+#include "list.h"
 
 #define SEC_TO_USEC(x) ((clock_t) ((x) * (clock_t) (1e6)))
 #define MS_TO_SEC(x) ((double) (x) / (double) 1000)
@@ -17,7 +18,6 @@
 
 int main(int argc, char* argv[]) {
 
-    int touche;
     int error = 0;
     int quit = false;
 
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     setlocale(LC_ALL, "");
     initscr();
 
-    WINDOW* game_win = interface_initialiser(monde);
+    interface_initialiser(monde);
     interface_afficher_monde(monde);
 
     PeriodicChrono move_timing = temps_initialiser_attente(MS_TO_SEC(monde.params.duree_tour));
@@ -52,6 +52,8 @@ int main(int argc, char* argv[]) {
         // 60 fps - Empêche la latence pour les évènements clavier
         usleep(SEC_TO_USEC(0.016));
     }
+
+    monde_libere(&monde);
 
     nodelay(stdscr, FALSE);
     getch();

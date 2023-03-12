@@ -44,7 +44,7 @@ int boolean_string(char* str) {
 }
 
 Monde parse_conf(char* filename) {
-    Monde m;
+    Monde m = monde_config_par_defaut(32, 16, 5, 5, 50);
     FILE* f;
 
     if (!(f = fopen(filename, "r"))) {
@@ -55,8 +55,8 @@ Monde parse_conf(char* filename) {
         exit(EXIT_FAILURE);
     }
 
-    char *name, *val;
-    int err;
+    char *name = NULL, *val = NULL;
+    int err = 0;
 
     while ((err = ini_getopt(f, &name, &val)) != EOF) {
         

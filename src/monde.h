@@ -35,8 +35,9 @@ typedef enum MondeErreur {
  * 
  * @param mon 
  * @param type type de pomme à ajouter
+ * @return int 0 en cas d'erreur d'allocation, 1 sinon
  */
-void monde_ajouter_pomme(Monde *mon, PommeType type);
+int monde_ajouter_pomme(Monde *mon, PommeType type);
 
 /**
  * @brief Initialise un monde avec une configuration
@@ -52,6 +53,22 @@ Monde monde_initialiser(
     int nb_lignes, int nb_colonnes,
     int taille_serpent,
     int nb_pommes, int pourcent_empoisonne
+);
+
+/**
+ * @brief Renvoie un monde préconfiguré mais
+ * non initialisé.
+ * 
+ * @param nb_lignes 
+ * @param nb_colonnes 
+ * @param taille_serpent 
+ * @param nb_pommes 
+ * @param pourcent_empoisonne 
+ * @return Monde 
+ */
+Monde monde_config_par_defaut(
+    int nb_lignes, int nb_colonnes,
+    int taille_serpent, int nb_pommes, int pourcent_empoisonne
 );
 
 /**
@@ -101,5 +118,12 @@ bool monde_pomme_existe(const ListePommes* apples, Case c);
  * @return false 
  */
 bool monde_serpent_existe(const ListeSerpent* snake, Case c);
+
+/**
+ * @brief Libère les allocations mémoire du monde
+ * 
+ * @param monde 
+ */
+void monde_libere(Monde* monde);
 
 #endif

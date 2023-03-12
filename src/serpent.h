@@ -49,6 +49,7 @@ Case serpent_case_visee(const Serpent* serp);
  * 
  * @param serpent 
  * @param c 
+ * @return int 0 en cas d'erreur d'allocation, 1 sinon
  */
 int serpent_ajoute_case(ListeSerpent* serpent, Case c);
 

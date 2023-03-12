@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <assert.h>
 
-void monde_ajouter_pomme(Monde *mon, PommeType type) {
+int monde_ajouter_pomme(Monde *mon, PommeType type) {
     Pomme apple;
 
     do {
@@ -23,7 +23,7 @@ void monde_ajouter_pomme(Monde *mon, PommeType type) {
     else
         apple.type = type;
 
-    pomme_ajoute_pomme(&mon->apples, apple);
+    return pomme_ajoute_pomme(&mon->apples, apple);
 }
 
 bool monde_pomme_existe(const ListePommes* apples, Case c) {
@@ -44,12 +44,12 @@ bool monde_serpent_existe(const ListeSerpent* snake, Case c) {
     return false;
 }
 
-Monde monde_initialiser(
+Monde monde_config_par_defaut(
     int nb_lignes, int nb_colonnes,
     int taille_serpent, int nb_pommes, int pourcent_empoisonne
 ) {
     assert(pourcent_empoisonne >= 0 && pourcent_empoisonne <= 100);
-    Monde monde = {
+    return (Monde) {
         .largeur = nb_colonnes,
         .hauteur = nb_lignes,
         .eaten_apples = 0,
@@ -66,7 +66,16 @@ Monde monde_initialiser(
             .len = taille_serpent,
         }
     };
-    
+}
+
+Monde monde_initialiser(
+    int nb_lignes, int nb_colonnes,
+    int taille_serpent, int nb_pommes, int pourcent_empoisonne
+) {
+    Monde monde = monde_config_par_defaut(
+        nb_lignes, nb_colonnes,
+        taille_serpent, nb_pommes, pourcent_empoisonne
+    );
     monde_initialiser_aux(&monde);
 
     return monde;
@@ -117,7 +126,10 @@ int monde_evoluer_serpent(Monde* monde) {
             break;
         }
 
-        monde_ajouter_pomme(monde, POMME_NORMALE | POMME_DOUBLE);
+        if (!monde_ajouter_pomme(monde, POMME_NORMALE | POMME_DOUBLE) ||
+            !serpent_ajoute_case(&monde->snake.snake_cases, new_tete)) {
+            return ERR_ALLOC;
+        }
         serpent_ajoute_case(&monde->snake.snake_cases, new_tete);
         monde->eaten_apples++;
     }
@@ -125,4 +137,9 @@ int monde_evoluer_serpent(Monde* monde) {
         return 0;
 
     return MONDE_NONE;
+}
+
+void monde_libere(Monde* monde) {
+    LIST_FREE(&monde->apples, ListePommesEntry);
+    LIST_FREE(&monde->snake.snake_cases, ListeSerpentEntry);
 }
