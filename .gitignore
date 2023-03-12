@@ -1,7 +1,7 @@
 .history/
 TP2_SEBAN_POUYANFAR.zip
 rapport.pdf
-build/
+build/*
 logos/
 tmp/
 

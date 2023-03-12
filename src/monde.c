@@ -55,20 +55,34 @@ Monde monde_initialiser(
         .eaten_apples = 0,
         .pause = false,
         .nb_pommes = nb_pommes,
-        .nb_pommes_empoisonnees = ((float) pourcent_empoisonne / 100) * nb_pommes,
-        .sound = true,
+        
+        .params = {
+            .sound = true,
+            .duree_tour = 250,
+            .pourcentage_empoisonnees = pourcent_empoisonne,
+        },
+
+        .snake = {
+            .len = taille_serpent,
+        }
     };
-
-    monde.snake = serpent_initialiser(nb_lignes, nb_colonnes, taille_serpent);
-
-    LIST_INIT(&monde.apples);
-    PommeType est_empoisonnee;
-    for (int i = 0; i < nb_pommes; ++i) {
-        est_empoisonnee = i < monde.nb_pommes_empoisonnees ? POMME_EMPOISOINNE : POMME_NORMALE;
-        monde_ajouter_pomme(&monde, est_empoisonnee);
-    }
+    
+    monde_initialiser_aux(&monde);
 
     return monde;
+}
+
+void monde_initialiser_aux(Monde* monde) {
+    monde->snake = serpent_initialiser(monde->hauteur, monde->largeur, monde->snake.len);
+
+    monde->nb_pommes_empoisonnees = ((float) monde->params.pourcentage_empoisonnees / 100) * monde->nb_pommes;
+
+    LIST_INIT(&monde->apples);
+    PommeType est_empoisonnee;
+    for (int i = 0; i < monde->nb_pommes; ++i) {
+        est_empoisonnee = i < monde->nb_pommes_empoisonnees ? POMME_EMPOISOINNE : POMME_NORMALE;
+        monde_ajouter_pomme(monde, est_empoisonnee);
+    }
 }
 
 int monde_est_mort_serpent(Monde monde) {

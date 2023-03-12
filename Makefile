@@ -4,7 +4,7 @@ SRC_DIR=src
 INC_DIR=include
 INCLUDE=-I$(INC_DIR)
 LIBS=-lncursesw -lm
-CFLAGS=-fdiagnostics-color=always -Wall -pedantic -std=gnu17 -g -O0 # -Wno-unused-variable -Wno-unused-but-set-variable
+CFLAGS=-fdiagnostics-color=always -Wall -std=gnu17 -g -O0 # -Wno-unused-variable -Wno-unused-but-set-variable
 TP_N=5
 NOM_ZIP=TP$(TP_N)_SEBAN_POUYANFAR.zip
 EXEC=main
@@ -25,13 +25,14 @@ $(BUILD_DIR)/$(EXEC): $(OBJS)
 	$(CC) $^ -o $@ $(LIBS)
 
 # Dépendances
-main.o: main.c interface.h serpent.h monde.h temps.h
+main.o: main.c interface.h serpent.h monde.h temps.h ini_parser.h
 interface.o: interface.c
 serpent.o: serpent.c types.h list.h
 monde.o: monde.c types.h serpent.h pomme.h list.h random.h
 pomme.o: pomme.c types.h list.h
 temps.o: temps.c temps.h
 random.o : random.c random.h
+ini_parser.o: ini_parser.c ini_parser.h
 
 # Création des fichiers objets à partir des fichiers sources
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c

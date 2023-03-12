@@ -98,7 +98,7 @@ void interface_afficher_monde(Monde mon) {
     interface_afficher_pommes(&mon.apples);
     interface_afficher_serpent(&mon.snake);
 
-    if (mon.sound) beep();
+    if (mon.params.sound) beep();
 
     mvprintw(
         LINES - 1, COLS / 2 - sizeof(STR_SCORE) / 2,

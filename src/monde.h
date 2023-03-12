@@ -7,15 +7,23 @@
 #include <ncurses.h>
 
 typedef struct monde {
+
     int hauteur, largeur;
     int eaten_apples;
     int score;
     Serpent snake;
     ListePommes apples;
     bool pause;
+    
     int nb_pommes;
     int nb_pommes_empoisonnees;
-    bool sound;
+    
+    struct {
+        int sound;
+        int duree_tour;
+        int pourcentage_empoisonnees;
+    } params;
+
 } Monde;
 
 typedef enum MondeErreur {
@@ -31,7 +39,8 @@ typedef enum MondeErreur {
 void monde_ajouter_pomme(Monde *mon, PommeType type);
 
 /**
- * @brief Initialise le monde.
+ * @brief Initialise un monde avec une configuration
+ * par défaut.
  * 
  * @param nb_lignes 
  * @param nb_colonnes 
@@ -44,6 +53,15 @@ Monde monde_initialiser(
     int taille_serpent,
     int nb_pommes, int pourcent_empoisonne
 );
+
+/**
+ * @brief Initialise les composants du monde
+ * (liste de pommes, cases du serpent)
+ * 
+ * @param monde 
+ * @return int 
+ */
+void monde_initialiser_aux(Monde* monde);
 
 /**
  * @brief Retourne vrai si le serpent est mort.
