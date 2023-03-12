@@ -3,6 +3,7 @@
 #include "types.h"
 #include <ncurses.h>
 #include <string.h>
+#include <stdlib.h>
 
 WINDOW* game_win = NULL;
 
@@ -17,6 +18,12 @@ WINDOW* interface_initialiser(Monde mon) {
         mon.hauteur + 2, mon.largeur + 2,
         LINES / 2 - mon.hauteur / 2,
         COLS / 2 - mon.largeur / 2);
+
+    if (!game_win) {
+        endwin();
+        fprintf(stderr, "La fenêtre est trop petite, veuillez l'agrandir.\n");
+        exit(EXIT_FAILURE);
+    }
     
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
