@@ -108,3 +108,5 @@ Parmi les améliorations proposées nous avons choisi d'apporter celles-ci au pr
 Pour le chargement du fichier de configuration, nous devons allouer la mémoire nécessaire pour le nom du paramètre et sa valeur.\
 En examinant le manuel C de la fonction ``scanf`` (``man 3 scanf``), nous avons découvert que celle-ci est capable de gérer l'allocation dynamique de la mémoire à l'aide du spécificateur ``m``. Nous l'avons donc utilisée.\
 Cependant, ceci est une fonctionnalité POSIX, non conforme à la norme ISO C, ce qui peut générer des warnings lors de la compilation avec l'option ``-pedantic``.
+
+D'autre part, nous n'avons pas réussi à rendre le jeu redimensionnable pendant l'exécution, car la sous-fenêtre ne se redimensionnait pas correctement.
