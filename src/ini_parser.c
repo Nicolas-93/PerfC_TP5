@@ -48,8 +48,11 @@ Monde parse_conf(char* filename) {
     FILE* f;
 
     if (!(f = fopen(filename, "r"))) {
-        fprintf(stderr, "Veuillez situer le fichier de configuration"
-                "'serpent.ini' dans le dossier de l'exécutable");
+        fprintf(stderr,
+                "Veuillez situer le fichier de configuration "
+                "'serpent.ini' dans le dossier de l'exécutable, "
+                "et vous situer dans le dossier build\n");
+        exit(EXIT_FAILURE);
     }
 
     char *name, *val;
