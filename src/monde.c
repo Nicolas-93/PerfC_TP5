@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <time.h>
 
 int monde_ajouter_pomme(Monde *mon, PommeType type) {
     Pomme apple;
@@ -82,10 +83,10 @@ Monde monde_initialiser(
 }
 
 void monde_initialiser_aux(Monde* monde) {
+
     monde->snake = serpent_initialiser(monde->hauteur, monde->largeur, monde->snake.len);
-
     monde->nb_pommes_empoisonnees = ((float) monde->params.pourcentage_empoisonnees / 100) * monde->nb_pommes;
-
+    srand(time(NULL));
     LIST_INIT(&monde->apples);
     PommeType est_empoisonnee;
     for (int i = 0; i < monde->nb_pommes; ++i) {
