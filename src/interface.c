@@ -1,5 +1,6 @@
 #include "interface.h"
 #include "list.h"
+#include "types.h"
 #include <ncurses.h>
 #include <string.h>
 
@@ -108,7 +109,7 @@ void interface_afficher_monde(Monde mon) {
     wrefresh(stdscr);
 }
 
-int interface_piloter(Monde *mon) {
+Error interface_piloter(Monde *mon) {
     int c = wgetch(game_win);
     switch (c) {
         case KEY_UP:
@@ -126,11 +127,13 @@ int interface_piloter(Monde *mon) {
         case 'p':
             mon->pause ^= 1;
             break;
+        case 'q':
+            return ERR_EXIT;
         default:
             break;
     }
 
-    return c;
+    return ERR_NONE;
 }
 
 void interface_afficher_message(char* msg) {

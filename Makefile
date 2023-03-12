@@ -8,7 +8,7 @@ CFLAGS=-fdiagnostics-color=always -Wall -std=gnu17 -g -O0 # -Wno-unused-variable
 TP_N=5
 NOM_ZIP=TP$(TP_N)_SEBAN_POUYANFAR.zip
 EXEC=main
-CONTENU_ZIP=$(SRC_DIR) $(INC_DIR) .clang-format .clang-tidy Makefile rapport.pdf
+CONTENU_ZIP=$(SRC_DIR) $(INC_DIR) .clang-format .clang-tidy Makefile rapport.pdf build/serpent.ini
 
 SOURCES=$(wildcard $(SRC_DIR)/*.c)
 HEADERS=$(wildcard $(INC_DIR)/*.h)
@@ -26,7 +26,7 @@ $(BUILD_DIR)/$(EXEC): $(OBJS)
 
 # Dépendances
 main.o: main.c interface.h serpent.h monde.h temps.h ini_parser.h
-interface.o: interface.c
+interface.o: interface.c interface.h list.h types.h
 serpent.o: serpent.c types.h list.h
 monde.o: monde.c types.h serpent.h pomme.h list.h random.h
 pomme.o: pomme.c types.h list.h

@@ -6,6 +6,7 @@
 #include "pomme.h"
 #include "serpent.h"
 #include "monde.h"
+#include "types.h"
 
 #define STR_SCORE "Score: %3d"
 #define STR_PERDU "Perdu !"
@@ -69,11 +70,11 @@ void interface_afficher_monde(Monde mon);
 
 /**
  * @brief Détecte la pression sur une touche commandant
- * la direction du serpent du monde pointé par mon et qui la met à jour.
- * 
+ * la direction du serpent du monde pointé par mon et la met à jour.
+ * Renvoie ERR_EXIT si l'utilisateur arrête le jeu.
  * @param mon 
  */
-int interface_piloter(Monde *mon);
+Error interface_piloter(Monde *mon);
 
 /**
  * @brief Affiche le message msg à la dernière ligne

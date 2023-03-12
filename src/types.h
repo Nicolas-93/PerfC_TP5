@@ -4,6 +4,7 @@
 typedef enum Error {
     ERR_NONE,
     ERR_ALLOC,
+    ERR_EXIT,
 } Error;
 
 typedef struct _case {

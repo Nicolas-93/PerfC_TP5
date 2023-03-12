@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 
     while (!quit) {
 
-        touche = interface_piloter(&monde);
+        quit = interface_piloter(&monde);
 
         if (!monde.pause) {
             if (temps_verifier_depasse(&move_timing)) {
