@@ -4,7 +4,7 @@ SRC_DIR=src
 INC_DIR=include
 INCLUDE=-I$(INC_DIR)
 LIBS=-lncursesw -lm
-CFLAGS=-fdiagnostics-color=always -Wall -std=gnu17 -g -O0 # -Wno-unused-variable -Wno-unused-but-set-variable
+CFLAGS=-fdiagnostics-color=always -Wall -std=c17 -g -O0 # -Wno-unused-variable -Wno-unused-but-set-variable
 TP_N=5
 NOM_ZIP=TP$(TP_N)_SEBAN_POUYANFAR.zip
 EXEC=main
