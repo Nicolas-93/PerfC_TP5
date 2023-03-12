@@ -3,6 +3,8 @@
 #include <sys/time.h>
 #include <stdbool.h>
 
+
+
 typedef struct PeriodicChrono {
     struct timespec temps_actuel;
     struct timespec temps_futur;
@@ -26,3 +28,4 @@ PeriodicChrono temps_initialiser_attente(double n);
  * @return false 
  */
 bool temps_verifier_depasse(PeriodicChrono* chrono);
+void temps_reinitialise_chrono(PeriodicChrono* chrono, double n);

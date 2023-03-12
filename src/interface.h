@@ -10,6 +10,12 @@
 #define STR_SCORE "Score: %3d"
 #define STR_PERDU "Perdu !"
 
+typedef enum ColorPair {
+    PAIR_RED = 1,
+    PAIR_GREEN,
+    PAIR_YELLOW,
+}
+
 WINDOW* interface_initialiser(Monde mon);
 
 /**

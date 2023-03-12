@@ -6,6 +6,7 @@
 typedef struct pomme {
     Case c;
     bool est_empoisonnee;
+    bool est_double;
 } Pomme;
 
 typedef struct ListePommesEntry {

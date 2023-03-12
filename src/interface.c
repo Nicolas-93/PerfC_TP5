@@ -3,6 +3,7 @@
 #include <ncurses.h>
 #include <string.h>
 
+
 WINDOW* game_win = NULL;
 
 /**
@@ -25,6 +26,7 @@ WINDOW* interface_initialiser(Monde mon) {
     
     noecho();
     curs_set(FALSE);
+    start_color();
     
     interface_afficher_quadrillage(mon);
 
@@ -41,7 +43,10 @@ void interface_afficher_quadrillage(Monde mon) {
 }
 
 void interface_afficher_pomme(Pomme pom) {
+    init_pair(PAIR_RED, COLOR_RED, COLOR_BLACK);
+    wattron(game_win, COLOR_PAIR(PAIR_RED));
     mvwaddch(game_win, pom.c.y + 1, pom.c.x + 1, 'o');
+    wattroff(game_win, COLOR_PAIR(PAIR_RED));
 }
 
 void interface_afficher_pommes(const ListePommes* pommes) {
@@ -57,15 +62,20 @@ void interface_afficher_serpent(const Serpent* ser) {
     // par un espace, pour éviter un clear de la fenêtre.
     static Case last_case = {-1, -1};
     ListeSerpentEntry* cell;
+    
 
     if (last_case.x != -1 && last_case.y != -1)
         mvwaddch(game_win, last_case.y + 1, last_case.x + 1, ' ');
 
     last_case = LIST_FIRST(&ser->snake_cases)->c;
 
+    init_pair(PAIR_GREEN, COLOR_GREEN, COLOR_BLACK);
+    
+    wattron(game_win, COLOR_PAIR(PAIR_GREEN));
     LIST_FOREACH(cell, &ser->snake_cases) {
         mvwaddch(game_win, cell->c.y + 1, cell->c.x + 1, ACS_DIAMOND);
     }
+    wattroff(game_win, COLOR_PAIR(PAIR_GREEN));
 }
 
 void interface_afficher_monde(Monde mon) {

@@ -37,3 +37,17 @@ bool temps_verifier_depasse(PeriodicChrono* chrono) {
     }
     return false;
 }
+
+void temps_reinitialise_chrono(PeriodicChrono* chrono, double n) {
+    // Le but c'est de réinitialiser un chrono avec une nouvelle quantité de temps.
+    chrono->sec_to_wait = n;
+
+    chrono->temps_futur.tv_sec = chrono->temps_actuel.tv_sec;
+    chrono->temps_futur.tv_nsec = chrono->temps_actuel.tv_nsec + (time_t)(n * 1e9);
+
+    chrono->temps_futur.tv_sec += chrono->temps_futur.tv_nsec / (time_t)(1e9);
+    chrono->temps_futur.tv_nsec %= (time_t)(1e9);
+
+}
+
+
